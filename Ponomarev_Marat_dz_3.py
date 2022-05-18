@@ -69,6 +69,7 @@ def thesaurus_adv(*names):
         last[i] = (last[i], last_dict)
     return dict(last)
 
+<<<<<<< HEAD
 # def thesaurus_adv(*names_surnames):
 # out_dict = {}
 # for name_surname in names_surnames:
@@ -76,6 +77,8 @@ def thesaurus_adv(*names):
 #     out_dict.setdefault(surname[0], {})
 #     out_dict[surname[0]].setdefault(name[0], [])
 #     out_dict[surname[0]][name[0]].append(name_surname)
+=======
+>>>>>>> a0c4c042d59c28b722db617b207754921d111c1e
 
 print(thesaurus_adv('Иван Сергеев', 'Инна Серова', 'Петр Алексеев',
                     'Илья Иванов', 'Анна Савельева'))
