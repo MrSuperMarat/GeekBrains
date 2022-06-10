@@ -47,16 +47,17 @@ traf_light.running()
 
 
 class Road:
-
-    def weight(self, length, width, mass, count):
+    def __init__(self, length, width):
         self._length = length
         self._width = width
+
+    def weight(self, mass, count):
         return f'Для строительства дороги требуется ' \
-               f'{round(length * width * mass * count / 1000)} т асфальта'
+               f'{round(self._length * self._width * mass * count / 1000)} т асфальта'
 
 
-road = Road()
-print(road.weight(20, 5000, 25, 5))
+road = Road(20, 5000)
+print(road.weight(25, 5))
 
 # 3. Реализовать базовый класс Worker (работник).
 # определить атрибуты: name, surname, position (должность), income (доход);
