@@ -4,9 +4,21 @@
 # Если адрес не валиден, выбросить исключение ValueError.
 
 import re
+from functools import wraps
 
 RE_EMAIL = re.compile(r'^[a-zA-Z0-9_\.-][a-zA-Z0-9_-]+[a-zA-Z0-9_\.-]'
                       r'@[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$')
+
+# class ValueError(Exception):
+#     print(f'ValueError: wrong email')
+#
+# def email_parse(email):
+#     print(RE_EMAIL.match(email))
+#     try:
+#         if RE_EMAIL.match(email) != None:
+#             return dict(zip(('username', 'domain'), re.split('@', email)))
+#     except Exception:
+#         raise ValueError
 
 # RE_GET_PARSER = re.compile(r'(?P<username>[^@]+)@(?P<domain>[^@]+)')
 #
@@ -15,7 +27,7 @@ RE_EMAIL = re.compile(r'^[a-zA-Z0-9_\.-][a-zA-Z0-9_-]+[a-zA-Z0-9_\.-]'
 
 def email_parse(email):
     if RE_EMAIL.match(email) is None:
-        return ValueError
+        raise ValueError(f'wrong email: {email}')
     else:
         return dict(zip(('username', 'domain'), re.split('@', email)))
 
@@ -26,7 +38,7 @@ print(email_parse('apagey2009@yandex.ru'))
 # web-сервера из ДЗ 6 урока nginx_logs.txt.
 
 RE_PARSED_RAW = re.compile(r'((?:\d+\.){3}\d+) - - '
-                           r'\[(\d{2}/[A-Z][a-z]+/\d{4}(?::\d{2}){3}'
+                           r'\[(\d{2}/[A-Z][a-z]+/\d{4}(?::\d{2}){3} '
                            r'\+\d{4})\] "([A-Z]+) '
                            r'(/[a-z]+/[a-z1-9_]+) [A-Z]{4}/\d{1}\.\d{1}" '
                            r'(\d{3}) '
@@ -43,11 +55,10 @@ with open(r'Ponomarev_Marat_dz_6\nginx_logs.txt', 'r') as file:
 
 
 def type_logger(func):
-
+    @wraps(func)
     def type_function(*args):
         for i in args:
             print(f'{i}: {type(i)}', end=', ')
-
     return type_function
 
 
@@ -64,20 +75,22 @@ print()
 # если что-то не так.
 
 
-def val_checker(func):
+def val_checker(positive_number):
+    def _val_checker(calc_cube):
+        @wraps(calc_cube)
+        def callback(x):
+            if positive_number(x):
+                return calc_cube(x)
+            else:
+                raise ValueError(x)
+        return callback
 
-    def callback(args):
-        if args > 0:
-            return func(args)
-        else:
-            return ValueError
-
-    return callback
+    return _val_checker
 
 
-@val_checker
+@val_checker(lambda x: x > 0)
 def calc_cube(x):
     return x ** 3
 
 
-print(calc_cube(-5))
+print(calc_cube(5))
