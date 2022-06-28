@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 # 1. Реализовать класс Matrix (матрица). Обеспечить перегрузку
 # конструктора класса (метод __init__()), который должен принимать
 # данные (список списков) для формирования матрицы.
@@ -34,59 +36,37 @@ print(a+b)
 # одежды в этом проекте относятся пальто и костюм. У этих типов одежды
 # существуют параметры: размер (для пальто) и рост (для костюма). Это
 # могут быть обычные числа: V и H, соответственно.
+
+
+class Clothes(ABC):
+    def __init__(self, param):
+        self.param = param
+
+    @abstractmethod
+    def consumption(self):
+        pass
+
+
 # Для определения расхода ткани по каждому типу одежды использовать
 # формулы: для пальто (V/6.5 + 0.5), для костюма(2*H + 0.3). Проверить
 # работу этих методов на реальных данных.
 # Выполнить общий подсчёт расхода ткани.
-
-
-class Clothes():
-    def __init__(self, size, height):
-        self.size = size
-        self.height = height
-
-    def coat(self):
-        return (f'Для изготовления пальто требуется '
-                f'{round(self.size/6.5 + 0.5, 2)} метров ткани')
-
-    def suit(self):
-        return (f'Для изготовления костюма требуется '
-                f'{round(2*self.height + 0.3, 2)} метров ткани')
-
-    def consumption(self):
-        return (f'Общий расход ткани: '
-                f'{round(self.size/6.5 + 2*self.height + 0.8, 2)} '
-                f'метров')
-
-
-clothes = Clothes(50, 5)
-print(clothes.coat())
-print(clothes.suit())
-print(clothes.consumption())
-
-
 # Реализовать абстрактные классы для основных классов проекта и
 # проверить работу декоратора @property.
 
 
-class Coat():
-    def __init__(self, size):
-        self.size = size
-
+class Coat(Clothes):
     @property
     def consumption(self):
         return (f'Для изготовления пальто требуется '
-                f'{round(self.size/6.5 + 0.5, 2)} метров ткани')
+                f'{round(self.param/6.5 + 0.5, 2)} метров ткани')
 
 
-class Suit():
-    def __init__(self, height):
-        self.height = height
-
+class Suit(Clothes):
     @property
     def consumption(self):
         return (f'Для изготовления костюма требуется '
-                f'{round(2*self.height + 0.3, 2)} метров ткани')
+                f'{round(2*self.param + 0.3, 2)} метров ткани')
 
 
 coat = Coat(50)
@@ -94,6 +74,9 @@ print(coat.consumption)
 
 suit = Suit(5)
 print(suit.consumption)
+
+print(f'Общий расход ткани: '
+      f'{round(coat.param/6.5 + 2*suit.param + 0.8, 2)} метров')
 
 # 3. Осуществить программу работы с органическими клетками, состоящими
 # из ячеек. Необходимо создать класс «Клетка». В его конструкторе
@@ -153,15 +136,15 @@ class cell():
 # оставшиеся.
 
     def make_order(self, row):
-        return (self.count // row * ('*' * row + '\\n')
-                + self.count % row * '*').rstrip('\\n')
+        return (self.count // row * ('*' * row + '\n')
+                + self.count % row * '*').rstrip()
 
         # order = []
         # while self.count > row:
         #     order.append('*' * row)
         #     self.count -= row
         # order.append('*' * self.count)
-        # return '\\n'.join(order)
+        # return '\n'.join(order)
 
 
 first = cell(50)
