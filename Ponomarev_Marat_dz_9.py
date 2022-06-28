@@ -15,7 +15,6 @@ from time import sleep
 
 
 class TrafficLight:
-
     __color = ['red', 'yellow', 'green']
 
     def running(self):
@@ -52,8 +51,9 @@ class Road:
         self._width = width
 
     def weight(self, mass, count):
-        return f'Для строительства дороги требуется ' \
-               f'{round(self._length * self._width * mass * count / 1000)} т асфальта'
+        return (f'Для строительства дороги требуется '
+                f'{round(self._length * self._width * mass * count / 1000)}'
+                f' т асфальта')
 
 
 road = Road(20, 5000)
@@ -130,7 +130,6 @@ class Car():
 
 
 class TownCar(Car):
-
     def show_speed(self):
         if self.speed > 60:
             print(f'Скорость автомобиля {self.name} превышена')
@@ -146,7 +145,6 @@ class SportCar(Car):
 
 
 class WorkCar(Car):
-
     def show_speed(self):
         if self.speed > 40:
             print(f'Скорость автомобиля {self.name} превышена')
@@ -194,19 +192,16 @@ class Stationery():
 
 
 class Pen(Stationery):
-
     def draw(self):
         print('Запуск отрисовки ручкой')
 
 
 class Pencil(Stationery):
-
     def draw(self):
         print('Запуск отрисовки карандашом')
 
 
 class Handle(Stationery):
-
     def draw(self):
         print('Запуск отрисовки маркером')
 
