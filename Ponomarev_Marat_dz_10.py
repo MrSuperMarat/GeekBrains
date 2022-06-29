@@ -89,7 +89,7 @@ print(f'Общий расход ткани: '
 # до целого числа деления клеток, соответственно.
 
 
-class cell():
+class Cell:
     def __init__(self, count):
         self.count = count
 
@@ -147,8 +147,8 @@ class cell():
         # return '\n'.join(order)
 
 
-first = cell(50)
-second = cell(19)
+first = Cell(50)
+second = Cell(19)
 
 print(first + second)
 print(first - second)
