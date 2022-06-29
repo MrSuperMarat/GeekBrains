@@ -14,24 +14,45 @@
 from time import sleep
 
 
+class OwnError(Exception):
+    pass
+
+
 class TrafficLight:
-    __color = ['red', 'yellow', 'green']
+    def __init__(self, color):
+        self.__color = color
 
     def running(self):
         i = 0
-        while i < 3:
-            print(self.__color[i])
-            if i == 0:
-                sleep(7)
-            elif i == 1:
-                sleep(2)
-            else:
-                sleep(3)
-            i += 1
+        try:
+            while i < 3:
+                if i == 0:
+                    if self.__color[i] == 'red':
+                        print(self.__color[i])
+                        sleep(7)
+                    else:
+                        raise OwnError
+                elif i == 1:
+                    if self.__color[i] == 'yellow':
+                        print(self.__color[i])
+                        sleep(2)
+                    else:
+                        raise OwnError
+                else:
+                    if self.__color[i] == 'green':
+                        print(self.__color[i])
+                        sleep(3)
+                    else:
+                        raise OwnError
+                i += 1
+        except OwnError:
+            print('Нарушен порядок режимов')
 
 
-traf_light = TrafficLight()
-traf_light.running()
+traf_light1 = TrafficLight(['yellow', 'yellow', 'green'])
+traf_light2 = TrafficLight(['red', 'yellow', 'green'])
+traf_light1.running()
+traf_light2.running()
 
 # 2. Реализовать класс Road (дорога).
 # определить атрибуты: length (длина), width (ширина);
@@ -109,7 +130,7 @@ print(work.get_total_income())
 # сообщение о превышении скорости.
 
 
-class Car():
+class Car:
     def __init__(self, speed, color, name, is_police):
         self.speed = speed
         self.color = color
